@@ -8,7 +8,14 @@ import { GiOpenBook } from "react-icons/gi";
 import "../css/sidebar.css";
 import User from "../assets/me.png";
 
-export default function Sidebar({ setSelectedTheme }) {
+export default function Sidebar({ setSelectedTheme, handleFireAudio }) {
+
+    const setFireTheme = () => {
+        setTimeout(() => {
+            setSelectedTheme('fire');
+        }, 500);
+        handleFireAudio();
+    }
 
     return (
         <section className="sidebar">
@@ -20,7 +27,7 @@ export default function Sidebar({ setSelectedTheme }) {
                     <HiMoon onClick={() => setSelectedTheme('dark')} />
                 </span>
                 <span className="sidebar-one-options">
-                    <GoFlame onClick={() => setSelectedTheme('fire')} />
+                    <GoFlame onClick={setFireTheme} />
                 </span>
             </div>
             <div className="sidebar-two">
