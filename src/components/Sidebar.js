@@ -56,7 +56,6 @@ export default function Sidebar({ setSelectedTheme, handleFireAudio }) {
                     <span>
                         <HiMoon /> Moon
                     </span>
-                    <span>Insert</span>
                 </ul>
                 <section className="sidebar-two-footer">
                     <span>

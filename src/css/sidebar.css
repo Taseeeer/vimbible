@@ -75,6 +75,15 @@
     flex: 1 0 80%;
 }
 
+.sidebar-two-routes::-webkit-scrollbar {
+    width: 5px;
+}
+.sidebar-two-routes::-webkit-scrollbar-thumb  {
+    -webkit-border-radius: 10px;
+     border-radius: 10px;
+     background: var(--gray1); 
+}
+
 
 .sidebar-two-routes > span {
     font-size: 1rem;
