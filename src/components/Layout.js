@@ -1,19 +1,25 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Sidebar from "./Sidebar";
 
 import "../css/layout.css";
 import User from "../assets/me.png";
+
+import { useWindowSize } from "../lib/useWindowResize";
 
 import chargingAudio from "../../public/charging.mp3";
 import fireAudio from "../assets/fire.wav";
 
 import { GoPrimitiveDot } from "react-icons/go";
 import { BsBatteryCharging, BsBatteryHalf } from "react-icons/bs";
+import { BiCaretRight, BiCaretLeft } from "react-icons/bi";
 
+export default function Layout({ children }) {
 
-export default function Layout() {
+    const [ showMobView, setShowMobView ] = useState(false);
 
-    const classRef = useRef(null);
+    let width = useWindowSize();
+
+    const classRef = useRef();
     const audioRef = useRef(null);
     const firAudioRef = useRef(null);
 
@@ -26,24 +32,40 @@ export default function Layout() {
     }
 
     const handleFireAudio = () => firAudioRef.current.play();
+
+    let persistedTheme = localStorage.getItem('theme');
+
+    useEffect(() => {
+        if(persistedTheme) classRef.current.className = persistedTheme;
+    }, []);
     
 
     const setSelectedTheme = (color) => {
         switch(color) {
-            case "purple":
+            case "purple": {
+                localStorage.setItem("theme", "layout purple-mode"); 
                 return classRef.current.className = "layout purple-mode";
+            }
 
-            case "vim":
+            case "vim": {
+                localStorage.setItem("theme", "layout vim-mode"); 
                 return classRef.current.className = "layout vim-mode";
+            }
 
-            case "basic":
+            case "basic": {
+                localStorage.setItem("theme", "layout basic-mode"); 
                 return classRef.current.className = "layout basic-mode";
+            }
 
-            case "fire":
+            case "fire": {
+                localStorage.setItem("theme", "layout fire-mode"); 
                 return classRef.current.className = "layout fire-mode";
+            }
 
-            case "dark":
+            case "dark": {
+                localStorage.setItem("theme", "layout dark-mode"); 
                 return classRef.current.className = "layout dark-mode";
+            }
 
             case "default":
                 return classRef.current.className = "layout";
@@ -51,6 +73,7 @@ export default function Layout() {
     };
 
     return (
+        <>
         <div className="layout" ref={classRef}>
             <div>
                 <audio id="charging" style={{visibility: "hidden"}} ref={audioRef}>
@@ -74,37 +97,31 @@ export default function Layout() {
                 <GoPrimitiveDot className="nav-dots white" onClick={() => setSelectedTheme('basic')} />
             </div>
             <div className="outer-container">
+                <div className="sidebar-mobview" style={{display: `${width[0] < 750 ? "block" : "none"}`}}>
+                    <span style={{fontSize: "2rem"}} onClick={() => setShowMobView(!showMobView)}>
+                        {showMobView ? <BiCaretLeft /> : <BiCaretRight />}
+                    </span>
+                    <div style={{display: `${showMobView ? "block": "none"}`}}>
+                        <Sidebar setSelectedTheme={setSelectedTheme} handleFireAudio={handleFireAudio} />
+                    </div>
+                </div>
                 <div className="sidebar-container">
                     <Sidebar setSelectedTheme={setSelectedTheme} handleFireAudio={handleFireAudio} />
                 </div>
                 <div className="content-container">
                     <div className="content-outer">
-                        <img src={User} alt="user" style={{width: "40px", height: "40px", borderRadius: "50%"}} /> 
+                        <img src={User} alt="user" className="user-image" /> 
                         <div className="content-info">
                             <div className="info-one">
                                 <span className="content-name">Syed Taseer Shah</span>
                                 <span className="content-time">Today at 2:24 PM</span>
                             </div>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
-                            <span className="content-words">Get the best Results for Harvard Leadership Certificate. Find what you are looking for! 99% Match on Harvard Leadership Certificate. Find Here - Free, Private and Secure. Unlimited Access. Results & Answers. Always Facts. The Best Resources. Privacy Friendly.</span>
+                            <span className="content-words">{ children }</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </>
     )
 }
